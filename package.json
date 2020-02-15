@@ -1,0 +1,24 @@
+{
+  "scripts": {
+    "sunny": "./bin/sunny clientid 56326889de28f7aa",
+    "ngrok": "./bin/ngrok http 3000",
+    "serve": "nodemon server",
+    "start": "yarn serve & yarn sunny",
+    "source": "nodemon co-wechat-source-learning"
+  },
+  "dependencies": {
+    "axios": "^0.19.2",
+    "co-wechat": "^2.4.0",
+    "co-wechat-api": "^3.10.0",
+    "crypto": "^1.0.1",
+    "koa": "^2.11.0",
+    "koa-bodyparser": "^4.2.1",
+    "koa-router": "^8.0.7",
+    "koa-static": "^5.0.0",
+    "koa-xml-body": "^2.1.0",
+    "mongoose": "^5.9.1",
+    "url": "^0.11.0",
+    "xml2js": "^0.4.23"
+  },
+  "license": "MIT"
+}
