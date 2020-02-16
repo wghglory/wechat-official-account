@@ -25,6 +25,7 @@
       <cube-button @click='getFollowers'>getFollowers</cube-button>
       <cube-button @click='auth'>微信登录</cube-button>
       <cube-button @click='getUser'>获取用户信息</cube-button>
+      <cube-button @click='getJSConfig'>获取JSSKConfig</cube-button>
     </div>
     <script>
       var app = new Vue({
@@ -44,7 +45,6 @@
           },
           async auth() {
             window.location.href = '/wxAuthorize'
-
           },
           async getUser() {
             const qs = Qs.parse(window.location.search.substr(1))
@@ -55,6 +55,27 @@
             })
             console.log('User', res.data)
           },
+          async getJSConfig() {
+            console.log('wx', wx)
+            const res = await axios.get('/getJSConfig', {
+              params: {
+                url: window.location.href
+              }
+            })
+            console.log('res....', res.data)
+            res.data.jsApiList = ['onMenuShareTimeline', 'onMenuShareAppMessage']
+            wx.config(res.data);
+            wx.ready(function () {
+              console.log('wx.ready......')
+            })
+            wx.getNetworkType({
+              success: function (res) {
+                // 返回网络类型2g，3g，4g，wifi
+                var networkType = res.networkType;
+                console.log('getNetworkType...', networkType)
+              }
+            })
+          }
         },
         mounted: function () {
 

@@ -1,4 +1,6 @@
-# 微信公众号开发
+# 微信公众号服务端开发
+
+[网页端开发异步](./README2.md)
 
 wechat: https://www.npmjs.com/package/wechat
 

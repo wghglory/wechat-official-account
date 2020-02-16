@@ -130,6 +130,14 @@ router.get('/getUser', async (ctx, next) => {
   ctx.body = userInfo;
 });
 
+router.get('/getJsConfig', async (ctx) => {
+  console.log('getJSSDK...', ctx.query);
+
+  var res = await api.getJsConfig(ctx.query);
+  console.log('res', res);
+  ctx.body = res;
+});
+
 app.use(router.routes()); /*启动路由*/
 app.use(router.allowedMethods());
 app.listen(3000);
