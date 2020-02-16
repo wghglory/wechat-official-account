@@ -4,7 +4,6 @@ const static = require('koa-static');
 const bodyParser = require('koa-bodyparser');
 const axios = require('axios');
 const wechat = require('co-wechat');
-
 const conf = require('./conf');
 
 const app = new Koa();
@@ -61,7 +60,7 @@ router.get('/getFollowers', async (ctx) => {
 /**
  * 使用 co-wechat-api 实现接口 2 和接口 3。实际项目用这个
  */
-const { ServerToken } = require('./mongoose');
+const { ServerToken, ClientToken } = require('./mongoose');
 
 const WechatAPI = require('co-wechat-api');
 
@@ -78,6 +77,57 @@ router.get('/getFollowers', async (ctx) => {
   let res = await api.getFollowers();
   res = await api.batchGetUsers(res.data.openid, 'zh_CN');
   ctx.body = res;
+});
+
+const OAuth = require('co-wechat-oauth');
+const oauth = new OAuth(
+  conf.appid,
+  conf.appsecret,
+  async function(openid) {
+    return await ClientToken.getToken(openid);
+  },
+  async function(openid, token) {
+    return await ClientToken.setToken(openid, token);
+  },
+);
+
+// OAuth2 生成引导用户点击的 URL
+router.get('/wxAuthorize', async (ctx, next) => {
+  const state = ctx.query.id;
+  // const target = ctx.href
+  console.log('ctx...' + ctx.href);
+  // 目标地址
+  redirectUrl = ctx.href;
+  redirectUrl = redirectUrl.replace('wxAuthorize', 'wxCallback');
+  const scope = 'snsapi_userinfo';
+
+  var url = oauth.getAuthorizeURL(redirectUrl, state, scope);
+  console.log('url: ' + url);
+  ctx.redirect(url);
+});
+
+// 获取AccessToken
+router.get('/wxCallback', async (ctx, next) => {
+  const code = ctx.query.code;
+  // 授权码
+  console.log('getAccessToken', code);
+  var token = await oauth.getAccessToken(code);
+  var accessToken = token.data.access_token;
+  var openid = token.data.openid;
+  console.log('getAccessToken....');
+  console.log('accessToken', accessToken);
+  console.log('openid', openid);
+  // ctx.body = token
+
+  ctx.redirect('/?openid=' + openid);
+});
+
+router.get('/getUser', async (ctx, next) => {
+  const openid = ctx.query.openid;
+  console.log('getUser', openid);
+  var userInfo = await oauth.getUser(openid);
+  console.log('userInfo:', userInfo);
+  ctx.body = userInfo;
 });
 
 app.use(router.routes()); /*启动路由*/

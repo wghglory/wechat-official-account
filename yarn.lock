@@ -82,6 +82,13 @@ co-wechat-api@^3.10.0:
     httpx "^2.1.1"
     json-bigint "^0.3.0"
 
+co-wechat-oauth@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.npmjs.org/co-wechat-oauth/-/co-wechat-oauth-2.0.1.tgz#9ffa52ddfb9359d030018881c3f8d621048a2954"
+  integrity sha1-n/pS3fuTWdAwAYiBw/jWIQSKKVQ=
+  dependencies:
+    httpx "^2.1.1"
+
 co-wechat@^2.4.0:
   version "2.4.0"
   resolved "https://registry.npmjs.org/co-wechat/-/co-wechat-2.4.0.tgz#f69cbe893086ce3c4bbe14cc3c3753ab7d639385"

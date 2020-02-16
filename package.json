@@ -10,6 +10,7 @@
     "axios": "^0.19.2",
     "co-wechat": "^2.4.0",
     "co-wechat-api": "^3.10.0",
+    "co-wechat-oauth": "^2.0.1",
     "crypto": "^1.0.1",
     "koa": "^2.11.0",
     "koa-bodyparser": "^4.2.1",
