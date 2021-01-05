@@ -7,7 +7,7 @@
     "source": "nodemon co-wechat-source-learning"
   },
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "co-wechat": "^2.4.0",
     "co-wechat-api": "^3.10.0",
     "co-wechat-oauth": "^2.0.1",
